@@ -11,7 +11,7 @@ class Settings(BaseSettings):
     app_name: str = "FastAPI SaaS"
     app_env: str = "development"
     debug: bool = False
-    secret_key: str = "change-this-in-production-min-32-chars"
+    secret_key: str = Field(default="", description="Set via SECRET_KEY env var")
     allowed_origins: List[str] = ["http://localhost:3000"]
 
     # Database
