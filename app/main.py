@@ -10,7 +10,8 @@ from fastapi.exceptions import RequestValidationError
 from app.core.config import settings
 from app.db.session import init_db, close_db
 from app.api.v1.endpoints import auth, users, billing
-
+from app.core.rate_limiter import rate_limit_middleware
+from starlette.middleware.base import BaseHTTPMiddleware
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -32,11 +33,13 @@ def create_app() -> FastAPI:
     # CORS
     app.add_middleware(
         CORSMiddleware,
+        
         allow_origins=settings.allowed_origins,
         allow_credentials=True,
         allow_methods=["*"],
         allow_headers=["*"],
     )
+    app.add_middleware(BaseHTTPMiddleware, dispatch=rate_limit_middleware)
 
     # Validation error handler — consistent JSON format
     @app.exception_handler(RequestValidationError)
