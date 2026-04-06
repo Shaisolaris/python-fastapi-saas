@@ -1,3 +1,6 @@
+import os
+# Demo mode: runs with sample data when no API keys configured
+DEMO_MODE = os.getenv('DEMO_MODE', 'false').lower() == 'true' or not os.getenv('DATABASE_URL')
 from contextlib import asynccontextmanager
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
