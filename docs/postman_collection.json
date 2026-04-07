@@ -1,0 +1,46 @@
+{
+  "info": {
+    "name": "python-fastapi-saas",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": "FastAPI SaaS API with JWT auth, RBAC, Stripe billing"
+  },
+  "variable": [
+    {"key": "baseUrl", "value": "http://localhost:8000/api/v1"},
+    {"key": "token", "value": ""}
+  ],
+  "item": [
+    {
+      "name": "Auth",
+      "item": [
+        {"name": "Register", "request": {"method": "POST", "url": "{{baseUrl}}/auth/register", "header": [{"key": "Content-Type", "value": "application/json"}], "body": {"mode": "raw", "raw": "{\"email\": \"admin@demo.com\", \"password\": \"demo123\", \"name\": \"Sarah Chen\"}"}}},
+        {"name": "Login", "request": {"method": "POST", "url": "{{baseUrl}}/auth/login", "header": [{"key": "Content-Type", "value": "application/json"}], "body": {"mode": "raw", "raw": "{\"email\": \"admin@demo.com\", \"password\": \"demo123\"}"}}},
+        {"name": "Refresh", "request": {"method": "POST", "url": "{{baseUrl}}/auth/refresh", "header": [{"key": "Authorization", "value": "Bearer {{token}}"}]}},
+        {"name": "Get Me", "request": {"method": "GET", "url": "{{baseUrl}}/auth/me", "header": [{"key": "Authorization", "value": "Bearer {{token}}"}]}}
+      ]
+    },
+    {
+      "name": "Users",
+      "item": [
+        {"name": "List Users", "request": {"method": "GET", "url": "{{baseUrl}}/users?page=1&size=20", "header": [{"key": "Authorization", "value": "Bearer {{token}}"}]}},
+        {"name": "Get User", "request": {"method": "GET", "url": "{{baseUrl}}/users/:user_id", "header": [{"key": "Authorization", "value": "Bearer {{token}}"}]}},
+        {"name": "Create User", "request": {"method": "POST", "url": "{{baseUrl}}/users", "header": [{"key": "Authorization", "value": "Bearer {{token}}"}, {"key": "Content-Type", "value": "application/json"}], "body": {"mode": "raw", "raw": "{\"email\": \"dev@demo.com\", \"password\": \"demo123\", \"name\": \"James Wilson\", \"role\": \"member\"}"}}},
+        {"name": "Update Role", "request": {"method": "PATCH", "url": "{{baseUrl}}/users/:user_id/role", "header": [{"key": "Authorization", "value": "Bearer {{token}}"}, {"key": "Content-Type", "value": "application/json"}], "body": {"mode": "raw", "raw": "{\"role\": \"admin\"}"}}},
+        {"name": "Delete User", "request": {"method": "DELETE", "url": "{{baseUrl}}/users/:user_id", "header": [{"key": "Authorization", "value": "Bearer {{token}}"}]}}
+      ]
+    },
+    {
+      "name": "Billing",
+      "item": [
+        {"name": "Create Checkout", "request": {"method": "POST", "url": "{{baseUrl}}/billing/checkout", "header": [{"key": "Authorization", "value": "Bearer {{token}}"}, {"key": "Content-Type", "value": "application/json"}], "body": {"mode": "raw", "raw": "{\"price_id\": \"price_pro_monthly\"}"}}},
+        {"name": "Get Subscription", "request": {"method": "GET", "url": "{{baseUrl}}/billing/subscription", "header": [{"key": "Authorization", "value": "Bearer {{token}}"}]}},
+        {"name": "Customer Portal", "request": {"method": "POST", "url": "{{baseUrl}}/billing/portal", "header": [{"key": "Authorization", "value": "Bearer {{token}}"}]}}
+      ]
+    },
+    {
+      "name": "Health",
+      "item": [
+        {"name": "Health Check", "request": {"method": "GET", "url": "http://localhost:8000/health"}}
+      ]
+    }
+  ]
+}
