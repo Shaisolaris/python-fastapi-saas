@@ -131,3 +131,15 @@ open http://localhost:8000/docs
 | `STRIPE_PRICE_STARTER/PRO/ENTERPRISE` | Stripe price IDs |
 | `ACCESS_TOKEN_EXPIRE_MINUTES` | Default: 30 |
 | `REFRESH_TOKEN_EXPIRE_DAYS` | Default: 7 |
+
+## Why This Over Other FastAPI Boilerplates?
+
+| Feature | This Boilerplate | Typical FastAPI Starters |
+|---|---|---|
+| Demo mode (SQLite, zero config) | ✅ Auto-seeded, instant start | ❌ Requires PostgreSQL setup |
+| Multi-tenancy | ✅ Tenant-scoped data isolation | ❌ Single-tenant |
+| Stripe billing | ✅ Checkout, webhooks, portal | ❌ Not included |
+| JWT + refresh tokens | ✅ Rotation, revocation, expiry | ⚠️ Basic JWT only |
+| RBAC | ✅ Admin, member, viewer roles | ⚠️ No role system |
+| Async SQLAlchemy | ✅ Full async with connection pooling | ⚠️ Often sync |
+| API versioning | ✅ /api/v1/ prefix built in | ❌ Flat routes |
